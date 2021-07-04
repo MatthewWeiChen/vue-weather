@@ -3,7 +3,7 @@
     <main>
       <SearchBar @searchLocation="inputLocation" />
       <LocationTime :location="location" />
-      <Temperature />
+      <Temperature :temperature="temperature" />
     </main>
   </div>
 </template>
@@ -16,7 +16,10 @@ export default {
   name: "App",
   data() {
     return {
-      api_key: "c3560b9f610169e4e40ddf1a6062f5f3",
+      api_key: "c50f4b1779069f947bfd0fd196f49f8d",
+      url_base: "https://api.openweathermap.org/data/2.5/",
+      query: "",
+      weather: {},
       location: "",
     };
   },
@@ -26,8 +29,18 @@ export default {
     Temperature,
   },
   methods: {
-    inputLocation($event) {
+    async inputLocation($event) {
       this.location = $event;
+      console.log(this.location);
+      const response = await fetch(
+        `${this.url_base}weather?q=${this.location}&appid=${this.api_key}&units=imperial`
+      );
+      const data = await response.json();
+      this.setResults(data);
+    },
+    setResults(results) {
+      this.weather = results;
+      console.log(results);
     },
   },
 };

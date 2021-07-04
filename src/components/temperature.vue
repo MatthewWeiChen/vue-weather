@@ -1,11 +1,14 @@
 <template>
   <div class="temperature-container">
-    <div class="temperature">90° F</div>
+    <div class="temperature">{{ temperature }} F</div>
   </div>
 </template>
 <script>
 export default {
   name: "Temperature",
+  props: {
+    temperature: String,
+  },
 };
 </script>
 <style>
